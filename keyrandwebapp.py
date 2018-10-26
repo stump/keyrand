@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
 import bottle
-import hashlib
 import keyrand
 import random
 
@@ -26,10 +25,11 @@ def post():
     romimage = bytearray(rom.file.read(1048576))
     if len(romimage) != 1048576 or rom.file.read(1) != b'':
         return get(error='<p class="error">Incorrect ROM size.</p>')
-    if hashlib.sha256(romimage).hexdigest() != '5ca7ba01642a3b27b0cc0b5349b52792795b62d3ed977e98a09390659af96b7b':
-        return get(error='<p class="error">Unrecognized ROM image.</p>')
     rando = keyrand.KeyItemRandomizer(seed)
-    rando.apply_randomization(romimage)
+    try:
+        rando.apply_randomization(romimage)
+    except keyrand.UnrecognizedROM:
+        return get(error='<p class="error">Unrecognized ROM image.</p>')
     bottle.response.content_type = 'application/octet-stream'
     bottle.response.set_header('Content-Disposition', 'attachment; filename="randomized-%d.gbc"' % rando.seed)
     return bytes(romimage)
