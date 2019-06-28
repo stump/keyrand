@@ -369,7 +369,11 @@ class KeyItemRandomizer(object):
 
         # HM04 slot
         #At 0x75111, new item
-        replace_item(rom, 0x75111, 'HM04')
+        try:
+            replace_item(rom, 0x75111, 'HM04')
+        except UnrecognizedROM:
+            # Maybe it's Blue.
+            replace_item(rom, 0x75112, 'HM04')
 
         # HM05 slot
         #At 0x540f3, 6d (remove Cut tree in the way)
