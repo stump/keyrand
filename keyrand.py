@@ -439,6 +439,11 @@ class KeyItemRandomizer(object):
         replace_item(rom, 0x1e884, 'S.S. TICKET')
         #At 0x8d4a5, 50014bcf00e7505000 (remove "an" before item name in text)
         replace(rom, 0x8d4a5, 'a0ad7f50014bcf00e7', '50014bcf00e7505000')
+        # Make Bill not be required by changing the initial state of the Cerulean guards.
+        #At 0x0cb01, 15 (show the stepped-aside guard)
+        replace(rom, 0x0cb01, '11', '15')
+        #At 0x0cb07, 11 (hide the blocking guard)
+        replace(rom, 0x0cb07, '15', '11')
 
         # Secret Key slot
         #At 0x524d8, new item

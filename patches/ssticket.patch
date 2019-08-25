@@ -1,3 +1,19 @@
+diff --git a/data/hide_show_data.asm b/data/hide_show_data.asm
+index 1fa4b64a..9253e063 100755
+--- a/data/hide_show_data.asm
++++ b/data/hide_show_data.asm
+@@ -282,9 +282,9 @@ MapHS02:
+ MapHS03:
+ 	db CERULEAN_CITY,$01,Hide
+ 	db CERULEAN_CITY,$02,Show
+-	db CERULEAN_CITY,$06,Hide
++	db CERULEAN_CITY,$06,Show
+ 	db CERULEAN_CITY,$0A,Show
+-	db CERULEAN_CITY,$0B,Show
++	db CERULEAN_CITY,$0B,Hide
+ MapHS0A:
+ 	db SAFFRON_CITY,$01,Show
+ 	db SAFFRON_CITY,$02,Show
 diff --git a/scripts/billshouse.asm b/scripts/billshouse.asm
 index 2b60ef8c..1ddb819d 100755
 --- a/scripts/billshouse.asm
