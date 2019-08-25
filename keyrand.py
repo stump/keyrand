@@ -298,10 +298,6 @@ class KeyItemRandomizer(object):
         replace(rom, 0x1d783, '71', '78')
         #At 0x1d787, 18f6211058cd493cafea26ccea2acc3e03ea29cc3e01ea28ccea25cc3cea24cc2130d7cbf621a0c3010f04cd2219cd29243e06ea1ed1cdcf2f21cac3116dcdcd551911ff57cd551921e4c3110758cd5519211558cd493ccdbe3a2130d7cbb6cb4f200cfa26cca72006211a58cd493c212a58cd493cc3d724 (put correct item in menu when you don't have voucher, and patch instant text)
         replace(rom, 0x1d787, 'cd493c1869211058cd493cafea26ccea2acc3e03ea29cc3e01ea28cc3e02ea24cc3e01ea25cc2130d7cbf621a0c306040e0fcd2219cd292421cac311f857cd551921e4c3110758cd5519211558cd493ccdbe3acb4f20112130d7cbb6fa26cca72006211a58cd493c212a58cd493cc3d72481888298828b84', '18f6211058cd493cafea26ccea2acc3e03ea29cc3e01ea28ccea25cc3cea24cc2130d7cbf621a0c3010f04cd2219cd29243e06ea1ed1cdcf2f21cac3116dcdcd551911ff57cd551921e4c3110758cd5519211558cd493ccdbe3a2130d7cbb6cb4f200cfa26cca72006211a58cd493c212a58cd493cc3d724')
-        #At 0x1d78b, 70 (jump fixup)
-        #rom[0x1d78b] = 0x70
-        #At 0x1d7a3, ea25cc3cea24cc2130d7cbf621a0c3010f04cd2219cd29243e46cdcf2f21cac3116dcdcd551911ff57cd551921e4c3110758cd5519211558cd493ccdbe3acb4f20112130d7cbb6fa26cca72006211a58cd493c212a58cd493cc3d724 (put correct item in menu when you don't have voucher)
-        #rom[0x1d7a3:0x1d7ff] = binascii.unhexlify('ea25cc3cea24cc2130d7cbf621a0c3010f04cd2219cd29243e46cdcf2f21cac3116dcdcd551911ff57cd551921e4c3110758cd5519211558cd493ccdbe3acb4f20112130d7cbb6fa26cca72006211a58cd493c212a58cd493cc3d724')
         #At 0x1d7b9, new item
         replace_item(rom, 0x1d7b9, 'BICYCLE')
         #At 0x98ed4, 50014bcf00e8505000 (so text from wcf4b is used)
@@ -328,8 +324,7 @@ class KeyItemRandomizer(object):
         # Dome Fossil slot
         #At 0x49e40, 24 (pointer to adjusted text)
         replace(rom, 0x49e40, '29', '24')
-        #At 0x49eef, 3e29cdcf2f211f5fcd493ccdec35fa26cca7205e010129cd2e3ed2765fcd695f21f6d7cbf63e6dc3515f000000000000175e492050083e01ea3ccc3e2acdcf2f (put correct item in text when confirming picking up items)
-        #rom[0x49eef:0x49f2f] = binascii.unhexlify('3e29cdcf2f211f5fcd493ccdec35fa26cca7205e010129cd2e3ed2765fcd695f21f6d7cbf63e6dc3515f000000000000175e492050083e01ea3ccc3e2acdcf2f')
+        #At 0x49eef, 3e29cd195f211f5fcd493ccdec35fa26cca7205e010129cd2e3ed2765fcd695f21f6d7cbf63e6dc3515fea1ed1c3cf2f175e492050083e01ea3ccc3e2acd195f (put correct item in text when confirming picking up items)
         replace(rom, 0x49eef, '21245fcd493ccdec35fa26cca72023010129cd2e3ed2765fcd695f3e6dea4dcc3e11cd6d3e21f6d7cbf63e04ea07d6ea39dac3d724175e492050083e01ea3ccc', '3e29cd195f211f5fcd493ccdec35fa26cca7205e010129cd2e3ed2765fcd695f21f6d7cbf63e6dc3515fea1ed1c3cf2f175e492050083e01ea3ccc3e2acd195f')
         #At 0x49ef0, new item
         replace_item(rom, 0x49ef0, 'DOME FOSSIL')
@@ -368,9 +363,7 @@ class KeyItemRandomizer(object):
         # HM02 slot
         #At 0x1e612, new item
         replace_item(rom, 0x1e612, 'HM02')
-        #At 0x1e637, 7c (pointer to adjusted text after the HM02 text)
-        #At 0x8ce72, 50014bcf00e75050000000878cf6f87fa8b27f858b98e84f88b3bc (so text from wcf4b is used; adjust first text afterward to not have to shift everything after in way that minimizes length of this patch)
-        #Instead of those two, at 0x1e631, 9954 (repoint text to S.S. Ticket text, which uses text from wcf4b)
+        #At 0x1e631, 9954 (repoint text to S.S. Ticket text, which uses text from wcf4b)
         replace(rom, 0x1e631, '664e', '9954')
 
         # HM03 slot
@@ -421,6 +414,7 @@ class KeyItemRandomizer(object):
         replace_item(rom, 0x1d4ca, 'OAK\'s PARCEL')
         #At 0x95cc7, 50014bcf00e7505000 (so text from wcf4b is used)
         replace(rom, 0x95cc7, '8e808abd7f8f809182', '50014bcf00e7505000')
+        # TODO: Add error check for a full bag since this is no longer a forced pickup.
 
         # Old Amber slot
         #At 0x5c266, new item
@@ -461,7 +455,7 @@ class KeyItemRandomizer(object):
         replace(rom, 0x8ca45, 'a07f50014bcf00e750', '50014bcf00e7505000')
 
         # Town Map slot
-        #At 0x19b69, 5f (give you the item after just beating Rival I, not after delivering parcel)
+        #At 0x19b69, 5f (give you the item after just fighting Rival I, not after delivering parcel)
         replace(rom, 0x19b69, '6f', '5f')
         #At 0x19b7c, new item
         replace_item(rom, 0x19b7c, 'TOWN MAP')
