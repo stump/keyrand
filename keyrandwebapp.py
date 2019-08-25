@@ -40,11 +40,11 @@ def get(error=''):
 <!DOCTYPE html>
 <html>
  <head>
-  <title>stump's Pokémon Red Key Item Randomizer</title>
+  <title>stump's Pokémon Red/Blue Key Item Randomizer</title>
   <style type="text/css">.error { color: #cc0000; font-weight: bold; }</style>
  </head>
  <body>
-  <h1>stump's Pokémon Red Key Item Randomizer</h1>
+  <h1>stump's Pokémon Red/Blue Key Item Randomizer</h1>
   <h2>Things to be aware of</h2>
   <ul>
    <li>Blue's sister will give you her item if you are past the first fight, even if you have not yet delivered Oak's Parcel.</li>
@@ -58,7 +58,7 @@ def get(error=''):
   <form method="post" enctype="multipart/form-data">
    %(error)s
    <p><label for="rom">ROM:</label> <input type="file" id="rom" name="rom" /><br />
-   Provide a ROM image of English Pokémon Red. Support for other versions may be added later.</p>
+   Provide a ROM image of English Pokémon Red or Blue. Support for other versions may be added later. ROMs that have already been randomized with the Universal Pokémon Randomizer will work too.</p>
    <p><label for="seed">Seed:</label> <input type="number" id="seed" name="seed" value="0" min="0" max="4294967295" /><br />
    Enter a number from 1 to 4294967295. Enter 0 or leave blank to get a random seed.</p>
    <p><input type="submit" value="Randomize!" /></p>
