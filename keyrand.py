@@ -332,10 +332,10 @@ class KeyItemRandomizer(object):
         replace_item(rom, 0x49f05, 'DOME FOSSIL')
         #At 0x49f4a, 21f6d7cbfe3e6eea4dcc3e11cd6d3e (put correct item in text when confirming picking up items)
         replace(rom, 0x49f4a, '3e6eea4dcc3e11cd6d3e21f6d7cbfe', '21f6d7cbfe3e6eea4dcc3e11cd6d3e')
-        #At 0x8096c, 50016dcd00e65700 (remove "the" before item name in text)
-        replace(rom, 0x8096c, '838e8c847f858e92', '50016dcd00e65700')
+        #At 0x80967, 4f50016dcd00e65700 (remove "the" before item name in text)
+        replace(rom, 0x80967, '7fb3a7a44f838e8c84', '4f50016dcd00e65700')
         #At 0x8099b, 4f50014bcf00e7505000 (remove "the" before item name in text)
-        #rom[0x8099b:0x809a5] = binascii.unhexlify('4f50014bcf00e7505000')
+        replace(rom, 0x8099b, '7fb3a7a44f50014bcf00', '4f50014bcf00e7505000')
 
         # Gold Teeth slot
         #At 0x4a227, new item
@@ -353,8 +353,8 @@ class KeyItemRandomizer(object):
         replace_item(rom, 0x49f2b, 'HELIX FOSSIL')
         #At 0x49f40, new item
         replace_item(rom, 0x49f40, 'HELIX FOSSIL')
-        #At 0x80987, 50016dcd00e65700 (remove "the" before item name in text)
-        replace(rom, 0x80987, '87848b88977f858e', '50016dcd00e65700')
+        #At 0x80982, 4f50016dcd00e65700 (remove "the" before item name in text)
+        replace(rom, 0x80982, '7fb3a7a44f87848b88', '4f50016dcd00e65700')
 
         # HM01 slot
         #At 0x618c3, new item
@@ -386,11 +386,11 @@ class KeyItemRandomizer(object):
         #At 0x801a3, 5550015bcc00e7500505 (remove "an" before item name in aide script text)
         replace(rom, 0x801a3, '7fa0ad5550015bcc00e7', '5550015bcc00e7500500')
         #At 0x80244, 5550015bcc00e85700 (remove "the" before item name in aide script text)
-        #rom[0x80244:0x8024d] = binascii.unhexlify('5550015bcc00e85700')
+        replace(rom, 0x80244, '7fb3a7a45550015bcc', '5550015bcc00e85700')
         #At 0x802df, 4f50015bcc00e7505000 (remove "the" before item name in aide script text)
-        #rom[0x802df:0x802e9] = binascii.unhexlify('4f50015bcc00e7505000')
+        replace(rom, 0x802df, '7fb3a7a44f50015bcc00', '4f50015bcc00e7505000')
         #At 0x80311, 5550015bcc00e85700 (remove "the" before item name in aide script text)
-        #rom[0x80311:0x8031a] = binascii.unhexlify('5550015bcc00e85700')
+        replace(rom, 0x80311, '7fb3a7a45550015bcc', '5550015bcc00e85700')
         # TODO: Pokédex evaluation
 
         # Itemfinder slot
