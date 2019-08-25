@@ -381,6 +381,8 @@ class KeyItemRandomizer(object):
         # HM05 slot
         #At 0x540f3, 6d (remove Cut tree in the way)
         replace(rom, 0x540f3, '32', '6d')
+        #At 0x5d5e4, 06 (lower capture requirement to 6)
+        replace(rom, 0x5d5e4, '0a', '06')
         #At 0x5d5e8, new item
         replace_item(rom, 0x5d5e8, 'HM05')
         #At 0x801a3, 5550015bcc00e7500505 (remove "an" before item name in aide script text)
@@ -394,6 +396,8 @@ class KeyItemRandomizer(object):
         # TODO: Pokédex evaluation
 
         # Itemfinder slot
+        #At 0x49474, 0c (lower capture requirement to 12)
+        replace(rom, 0x49474, '1e', '0c')
         #At 0x49478, new item
         replace_item(rom, 0x49478, 'ITEMFINDER')
         # Aide script fixups from HM05.

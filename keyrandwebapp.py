@@ -50,6 +50,7 @@ def get(error=''):
    <li>Blue's sister will give you her item if you are past the first fight, even if you have not yet delivered Oak's Parcel.</li>
    <li>You can exit Cerulean through the Dig house without visiting Bill first.</li>
    <li>The Cut tree between Diglett's Cave and the right gatehouse on Route 2 has been removed.</li>
+   <li>Capture requirements for the HM05 and Itemfinder locations have been reduced to 6 and 12, respectively.</li>
    <li>The randomizer logic does consider the Poké Flute slot reachable without Silph Scope. (I may reconsider this.)</li>
    <li>Oak's Aides, the Bike Shop salesman, and the prompts for picking up the fossils will tell you the randomized item.</li>
    <li>All other references to key items in text, outside the immediate act of actually getting the item, will remain unchanged.</li>

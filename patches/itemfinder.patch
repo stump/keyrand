@@ -1,10 +1,13 @@
 diff --git a/scripts/route11gateupstairs.asm b/scripts/route11gateupstairs.asm
-index 6c8d6e99..54057cfe 100755
+index 6c8d6e99..ea36cb8a 100755
 --- a/scripts/route11gateupstairs.asm
 +++ b/scripts/route11gateupstairs.asm
-@@ -21,7 +21,7 @@ Route11GateUpstairsText2:
+@@ -19,9 +19,9 @@ Route11GateUpstairsText2:
+ 	TX_ASM
+ 	CheckEvent EVENT_GOT_ITEMFINDER, 1
  	jr c, .asm_4949b
- 	ld a, 30 ; pokemon needed
+-	ld a, 30 ; pokemon needed
++	ld a, 12 ; pokemon needed
  	ld [hOaksAideRequirement], a
 -	ld a, ITEMFINDER ; oak's aide reward
 +	ld a, $aa ; oak's aide reward
