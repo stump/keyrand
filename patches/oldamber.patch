@@ -1,0 +1,32 @@
+diff --git a/scripts/museum1f.asm b/scripts/museum1f.asm
+index 35bfb446..1154b970 100755
+--- a/scripts/museum1f.asm
++++ b/scripts/museum1f.asm
+@@ -191,7 +191,7 @@ Museum1FText3:
+ 	jr nz, .asm_5c285
+ 	ld hl, Museum1FText_5c28e
+ 	call PrintText
+-	lb bc, OLD_AMBER, 1
++	lb bc, $aa, 1
+ 	call GiveItem
+ 	jr nc, .BagFull
+ 	SetEvent EVENT_GOT_OLD_AMBER
+diff --git a/text/maps/museum_1f.asm b/text/maps/museum_1f.asm
+index 16431bda..f77a3ffd 100644
+--- a/text/maps/museum_1f.asm
++++ b/text/maps/museum_1f.asm
+@@ -82,7 +82,13 @@ _Museum1FText_5c28e::
+ 
+ _ReceivedOldAmberText::
+ 	text "<PLAYER> received"
+-	line "OLD AMBER!@@"
++	line "@"
++	TX_RAM wcf4b
++	text "!@@"
++	nop
++	nop
++	nop
++	nop
+ 
+ _Museum1FText_5c299::
+ 	text "Ssh! Get the OLD"

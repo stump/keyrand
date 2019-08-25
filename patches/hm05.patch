@@ -1,0 +1,88 @@
+diff --git a/maps/route2.blk b/maps/route2.blk
+index dd6227fd58e8bc6602e1c150a3b20cff268ba770..26e4f90ed1ed24293372135de17e217a256841e7 100644
+GIT binary patch
+delta 11
+ScmaFC^nz(ZDP!)$vQGdWM+HFu
+
+delta 11
+ScmaFC^nz(ZDWlQEvQGdVTLlIH
+
+diff --git a/scripts/route2gate.asm b/scripts/route2gate.asm
+index 34f1aa35..2b564d2f 100755
+--- a/scripts/route2gate.asm
++++ b/scripts/route2gate.asm
+@@ -11,7 +11,7 @@ Route2GateText1:
+ 	jr nz, .asm_5d60d
+ 	ld a, 10 ; pokemon needed
+ 	ld [hOaksAideRequirement], a
+-	ld a, HM_05 ; oak's aide reward
++	ld a, $aa ; oak's aide reward
+ 	ld [hOaksAideRewardItem], a
+ 	ld [wd11e], a
+ 	call GetItemName
+diff --git a/text.asm b/text.asm
+index fc075e19..0e1fb792 100644
+--- a/text.asm
++++ b/text.asm
+@@ -99,10 +99,12 @@ _OaksAideHiText::
+ 	text ""
+ 	line "kinds of #MON,"
+ 	cont "I'm supposed to"
+-	cont "give you an"
++	cont "give you"
+ 	cont "@"
+ 	TX_RAM wOaksAideRewardItemName
+-	text "!"
++	text "!@" ; take up bytes to reduce binary diff
++	TX_LINE   ; take up bytes to reduce binary diff
++	text ""   ; take up bytes to reduce binary diff
+ 
+ 	para "So, <PLAYER>! Have"
+ 	line "you caught at"
+@@ -123,11 +125,15 @@ _OaksAideUhOhText::
+ 	para "You need @"
+ 	TX_NUM hOaksAideRequirement, 1, 3
+ 	text " kinds"
+-	line "if you want the"
++	line "if you want"
+ 	cont "@"
+ 	TX_RAM wOaksAideRewardItemName
+ 	text "."
+ 	done
++	nop
++	nop
++	nop
++	nop
+ 
+ _OaksAideComeBackText::
+ 	text "Oh. I see."
+@@ -153,19 +159,27 @@ _OaksAideHereYouGoText::
+ 	prompt
+ 
+ _OaksAideGotItemText::
+-	text "<PLAYER> got the"
++	text "<PLAYER> got"
+ 	line "@"
+ 	TX_RAM wOaksAideRewardItemName
+ 	text "!@@"
++	nop
++	nop
++	nop
++	nop
+ 
+ _OaksAideNoRoomText::
+ 	text "Oh! I see you"
+ 	line "don't have any"
+-	cont "room for the"
++	cont "room for"
+ 	cont "@"
+ 	TX_RAM wOaksAideRewardItemName
+ 	text "."
+ 	done
++	nop
++	nop
++	nop
++	nop
+ 
+ INCLUDE "text/maps/viridian_forest.asm"
+ INCLUDE "text/maps/mt_moon_1f.asm"

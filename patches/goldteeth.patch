@@ -1,0 +1,13 @@
+diff --git a/data/mapObjects/safarizonewest.asm b/data/mapObjects/safarizonewest.asm
+index 64ed0876..c6dce189 100755
+--- a/data/mapObjects/safarizonewest.asm
++++ b/data/mapObjects/safarizonewest.asm
+@@ -21,7 +21,7 @@ SafariZoneWestObject:
+ 	object SPRITE_BALL, $8, $14, STAY, NONE, $1, MAX_POTION
+ 	object SPRITE_BALL, $9, $7, STAY, NONE, $2, TM_32
+ 	object SPRITE_BALL, $12, $12, STAY, NONE, $3, MAX_REVIVE
+-	object SPRITE_BALL, $13, $7, STAY, NONE, $4, GOLD_TEETH
++	object SPRITE_BALL, $13, $7, STAY, NONE, $4, $aa
+ 
+ 	; warp-to
+ 	EVENT_DISP SAFARI_ZONE_WEST_WIDTH, $0, $14 ; SAFARI_ZONE_NORTH

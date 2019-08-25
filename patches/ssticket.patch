@@ -1,0 +1,31 @@
+diff --git a/scripts/billshouse.asm b/scripts/billshouse.asm
+index 2b60ef8c..1ddb819d 100755
+--- a/scripts/billshouse.asm
++++ b/scripts/billshouse.asm
+@@ -163,7 +163,7 @@ BillsHouseText2:
+ 	jr nz, .asm_1e8a9
+ 	ld hl, BillThankYouText
+ 	call PrintText
+-	lb bc, S_S_TICKET, 1
++	lb bc, $aa, 1
+ 	call GiveItem
+ 	jr nc, .BagFull
+ 	ld hl, SSTicketReceivedText
+diff --git a/text/maps/bills_house.asm b/text/maps/bills_house.asm
+index 5ece48d7..35143d2d 100644
+--- a/text/maps/bills_house.asm
++++ b/text/maps/bills_house.asm
+@@ -55,9 +55,12 @@ _BillThankYouText::
+ 
+ _SSTicketReceivedText::
+ 	text "<PLAYER> received"
+-	line "an @"
++	line "@"
+ 	TX_RAM wcf4b
+ 	text "!@@"
++	nop
++	nop
++	nop
+ 
+ _SSTicketNoRoomText::
+ 	text "You've got too"

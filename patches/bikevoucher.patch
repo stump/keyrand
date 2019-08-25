@@ -1,0 +1,39 @@
+diff --git a/scripts/fanclub.asm b/scripts/fanclub.asm
+index b6d65586..4ec7331f 100755
+--- a/scripts/fanclub.asm
++++ b/scripts/fanclub.asm
+@@ -4,7 +4,7 @@ FanClubScript:
+ FanClubBikeInBag:
+ ; check if any bike paraphernalia in bag
+ 	CheckEvent EVENT_GOT_BIKE_VOUCHER
+-	ret nz
++	ret
+ 	ld b, BICYCLE
+ 	call IsItemInBag
+ 	ret nz
+@@ -113,7 +113,7 @@ FanClubText5:
+ 	; tell the story
+ 	ld hl, .storytext
+ 	call PrintText
+-	lb bc, BIKE_VOUCHER, 1
++	lb bc, $aa, 1
+ 	call GiveItem
+ 	jr nc, .BagFull
+ 	ld hl, .receivedvouchertext
+diff --git a/text/maps/fan_club.asm b/text/maps/fan_club.asm
+index 4827f2e8..dd57a483 100644
+--- a/text/maps/fan_club.asm
++++ b/text/maps/fan_club.asm
+@@ -84,9 +84,11 @@ FanClubChairStoryText::
+ 
+ ReceivedBikeVoucherText::
+ 	text "<PLAYER> received"
+-	line "a @"
++	line "@"
+ 	TX_RAM wcf4b
+ 	text "!@@"
++	nop
++	nop
+ 
+ ExplainBikeVoucherText::
+ 	text ""

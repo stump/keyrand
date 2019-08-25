@@ -277,6 +277,16 @@ class KeyItemRandomizer(object):
                 raise UnrecognizedROM(addr)
             rom[addr] = KEY_ITEM_IDS[self.mapping[name]]
 
+        # These hex strings are from applying a patch in the patches/ directory to
+        # pokered, rebuilding, then checking for different bytes.
+        # I did these by running "cmp -l", then slicing out the bytes in the indicated
+        # locations in the ROMs by hand in a Python REPL and copying them here.
+        # (Remember that cmp, for some incomprehensible reason, starts counting at 1!)
+        # Patches for automating this are welcome.
+        #
+        # Useful one-liner:
+        # cmp -l vanillared.gbc pokered.gbc | python3 -c 'for line in __import__("sys").stdin: a, b, c = line.split(); print(hex(int(a)-1), hex(int(b,8)), hex(int(c,8)))'
+
         # Bicycle slot
         #At 0x1d754, fc (jump fixup)
         replace(rom, 0x1d754, 'f5', 'fc')

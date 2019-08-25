@@ -1,0 +1,30 @@
+diff --git a/scripts/celadondiner.asm b/scripts/celadondiner.asm
+index 6fd594f7..96cae839 100755
+--- a/scripts/celadondiner.asm
++++ b/scripts/celadondiner.asm
+@@ -31,7 +31,7 @@ CeladonDinerText5:
+ 	jr nz, .asm_eb14d
+ 	ld hl, CeladonDinerText_491a7
+ 	call PrintText
+-	lb bc, COIN_CASE, 1
++	lb bc, $aa, 1
+ 	call GiveItem
+ 	jr nc, .BagFull
+ 	SetEvent EVENT_GOT_COIN_CASE
+diff --git a/text/maps/celadon_diner.asm b/text/maps/celadon_diner.asm
+index dc5e9350..4bddd500 100644
+--- a/text/maps/celadon_diner.asm
++++ b/text/maps/celadon_diner.asm
+@@ -43,9 +43,11 @@ _CeladonDinerText_491a7::
+ 
+ _ReceivedCoinCaseText::
+ 	text "<PLAYER> received"
+-	line "a @"
++	line "@"
+ 	TX_RAM wcf4b
+ 	text "!@@"
++	nop
++	nop
+ 
+ _CoinCaseNoRoomText::
+ 	text "Make room for"

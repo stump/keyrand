@@ -1,0 +1,57 @@
+diff --git a/scripts/viridianmart.asm b/scripts/viridianmart.asm
+index 451ab989..fbe21dfa 100755
+--- a/scripts/viridianmart.asm
++++ b/scripts/viridianmart.asm
+@@ -1,5 +1,7 @@
+ ViridianMartScript:
+-	call ViridianMartScript_1d47d
++	nop
++	nop
++	nop
+ 	call EnableAutoTextBoxDrawing
+ 	ld hl, ViridianMartScriptPointers
+ 	ld a, [wViridianMarketCurScript]
+@@ -22,7 +24,7 @@ ViridianMartScript_1d47d:
+ ViridianMartScriptPointers:
+ 	dw ViridianMartScript0
+ 	dw ViridianMartScript1
+-	dw ViridianMartScript2
++	dw ViridianMartScript_1d47d
+ 
+ ViridianMartScript0:
+ 	call UpdateSprites
+@@ -49,11 +51,11 @@ ViridianMartScript1:
+ 	and a
+ 	ret nz
+ 	call Delay3
++	lb bc, $aa, 1
++	call GiveItem
+ 	ld a, $5
+ 	ld [hSpriteIndexOrTextID], a
+ 	call DisplayTextID
+-	lb bc, OAKS_PARCEL, 1
+-	call GiveItem
+ 	SetEvent EVENT_GOT_OAKS_PARCEL
+ 	ld a, $2
+ 	ld [wViridianMarketCurScript], a
+diff --git a/text/maps/viridian_mart.asm b/text/maps/viridian_mart.asm
+index 61750afe..54a84134 100644
+--- a/text/maps/viridian_mart.asm
++++ b/text/maps/viridian_mart.asm
+@@ -17,7 +17,15 @@ ViridianMartParcelQuestText::
+ 	cont "to him?"
+ 
+ 	para "<PLAYER> got"
+-	line "OAK's PARCEL!@@"
++	line "@"
++	TX_RAM wcf4b
++	text "!@@"
++	nop
++	nop
++	nop
++	nop
++	nop
++	nop
+ 
+ _ViridianMartText2::
+ 	text "This shop sells"

@@ -1,0 +1,30 @@
+diff --git a/scripts/fuchsiahouse3.asm b/scripts/fuchsiahouse3.asm
+index 586d62f5..e6ad247e 100755
+--- a/scripts/fuchsiahouse3.asm
++++ b/scripts/fuchsiahouse3.asm
+@@ -18,7 +18,7 @@ FuchsiaHouse3Text1:
+ 	and a
+ 	jr nz, .refused
+ 
+-	lb bc, GOOD_ROD, 1
++	lb bc, $aa, 1
+ 	call GiveItem
+ 	jr nc, .full
+ 
+diff --git a/text/maps/fuchsia_fishing_house.asm b/text/maps/fuchsia_fishing_house.asm
+index b1b8b2f2..61a1494a 100644
+--- a/text/maps/fuchsia_fishing_house.asm
++++ b/text/maps/fuchsia_fishing_house.asm
+@@ -18,9 +18,11 @@ _FuchsiaHouse3Text_561c2::
+ 	line "fish, young one!"
+ 
+ 	para "<PLAYER> received"
+-	line "a @"
++	line "@"
+ 	TX_RAM wcf4b
+ 	text "!@@"
++	nop
++	nop
+ 
+ _FuchsiaHouse3Text_56212::
+ 	text "Oh... That's so"

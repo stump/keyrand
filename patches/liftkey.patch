@@ -1,0 +1,13 @@
+diff --git a/data/mapObjects/rockethideout4.asm b/data/mapObjects/rockethideout4.asm
+index b4e98d04..767ce7b9 100755
+--- a/data/mapObjects/rockethideout4.asm
++++ b/data/mapObjects/rockethideout4.asm
+@@ -17,7 +17,7 @@ RocketHideout4Object:
+ 	object SPRITE_BALL, $9, $4, STAY, NONE, $6, TM_02
+ 	object SPRITE_BALL, $c, $14, STAY, NONE, $7, IRON
+ 	object SPRITE_BALL, $19, $2, STAY, NONE, $8, SILPH_SCOPE
+-	object SPRITE_BALL, $a, $2, STAY, NONE, $9, LIFT_KEY
++	object SPRITE_BALL, $a, $2, STAY, NONE, $9, $aa
+ 
+ 	; warp-to
+ 	EVENT_DISP ROCKET_HIDEOUT_4_WIDTH, $a, $13 ; ROCKET_HIDEOUT_3

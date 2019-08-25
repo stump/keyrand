@@ -1,0 +1,13 @@
+diff --git a/scripts/route11gateupstairs.asm b/scripts/route11gateupstairs.asm
+index 6c8d6e99..54057cfe 100755
+--- a/scripts/route11gateupstairs.asm
++++ b/scripts/route11gateupstairs.asm
+@@ -21,7 +21,7 @@ Route11GateUpstairsText2:
+ 	jr c, .asm_4949b
+ 	ld a, 30 ; pokemon needed
+ 	ld [hOaksAideRequirement], a
+-	ld a, ITEMFINDER ; oak's aide reward
++	ld a, $aa ; oak's aide reward
+ 	ld [hOaksAideRewardItem], a
+ 	ld [wd11e], a
+ 	call GetItemName

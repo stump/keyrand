@@ -1,0 +1,22 @@
+diff --git a/scripts/route16house.asm b/scripts/route16house.asm
+index 5359248c..cd3c6528 100755
+--- a/scripts/route16house.asm
++++ b/scripts/route16house.asm
+@@ -12,7 +12,7 @@ Route16HouseText1:
+ 	jr nz, .asm_13616
+ 	ld hl, Route16HouseText3
+ 	call PrintText
+-	lb bc, HM_02, 1
++	lb bc, $aa, 1
+ 	call GiveItem
+ 	jr nc, .BagFull
+ 	SetEvent EVENT_GOT_HM02
+@@ -29,7 +29,7 @@ Route16HouseText3:
+ 	db "@"
+ 
+ ReceivedHM02Text:
+-	TX_FAR _ReceivedHM02Text
++	TX_FAR _SSTicketReceivedText
+ 	TX_SFX_KEY_ITEM
+ 	db "@"
+ 

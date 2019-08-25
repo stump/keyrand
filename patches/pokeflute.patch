@@ -1,0 +1,30 @@
+diff --git a/scripts/lavenderhouse1.asm b/scripts/lavenderhouse1.asm
+index 91b9286b..3bbfe125 100755
+--- a/scripts/lavenderhouse1.asm
++++ b/scripts/lavenderhouse1.asm
+@@ -72,7 +72,7 @@ LavenderHouse1Text5:
+ 	jr nz, .asm_15ac2
+ 	ld hl, LavenderHouse1Text_1d94c
+ 	call PrintText
+-	lb bc, POKE_FLUTE, 1
++	lb bc, $aa, 1
+ 	call GiveItem
+ 	jr nc, .BagFull
+ 	ld hl, ReceivedFluteText
+diff --git a/text/maps/fujis_house.asm b/text/maps/fujis_house.asm
+index 86cade68..3799e2b4 100644
+--- a/text/maps/fujis_house.asm
++++ b/text/maps/fujis_house.asm
+@@ -47,9 +47,11 @@ _LavenderHouse1Text_1d94c::
+ 
+ _ReceivedFluteText::
+ 	text "<PLAYER> received"
+-	line "a @"
++	line "@"
+ 	TX_RAM wcf4b
+ 	text "!@@"
++	nop
++	nop
+ 
+ _FluteExplanationText::
+ 	db $0

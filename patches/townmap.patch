@@ -1,0 +1,40 @@
+diff --git a/scripts/blueshouse.asm b/scripts/blueshouse.asm
+index 2b72ef97..827012a3 100755
+--- a/scripts/blueshouse.asm
++++ b/scripts/blueshouse.asm
+@@ -28,7 +28,7 @@ BluesHouseText1:
+ 	TX_ASM
+ 	CheckEvent EVENT_GOT_TOWN_MAP
+ 	jr nz, .GotMap
+-	CheckEvent EVENT_GOT_POKEDEX
++	CheckEvent EVENT_BATTLED_RIVAL_IN_OAKS_LAB
+ 	jr nz, .GiveMap
+ 	ld hl, DaisyInitialText
+ 	call PrintText
+@@ -37,7 +37,7 @@ BluesHouseText1:
+ .GiveMap
+ 	ld hl, DaisyOfferMapText
+ 	call PrintText
+-	lb bc, TOWN_MAP, 1
++	lb bc, $aa, 1
+ 	call GiveItem
+ 	jr nc, .BagFull
+ 	ld a, HS_TOWN_MAP
+diff --git a/text/maps/blues_house.asm b/text/maps/blues_house.asm
+index 1898636a..14dd5cf1 100644
+--- a/text/maps/blues_house.asm
++++ b/text/maps/blues_house.asm
+@@ -12,10 +12,12 @@ _DaisyOfferMapText::
+ 	prompt
+ 
+ _GotMapText::
+-	text "<PLAYER> got a"
++	text "<PLAYER> got"
+ 	line "@"
+ 	TX_RAM wcf4b
+ 	text "!@@"
++	nop
++	nop
+ 
+ _DaisyBagFullText::
+ 	text "You have too much"

@@ -1,0 +1,108 @@
+diff --git a/engine/main_menu_bkgd.asm b/engine/main_menu_bkgd.asm
+new file mode 100755
+index 00000000..86cf5e8f
+--- /dev/null
++++ b/engine/main_menu_bkgd.asm
+@@ -0,0 +1,67 @@
++ClearScreenAndDrawMainMenuBackground:
++        call ClearScreen
++        ld a, $ff
++        ld [wDestinationWarpID], a
++        ld a, FOREST
++        ld [wCurMapTileset], a
++        predef LoadTilesetHeader
++        call DisableLCD
++        call LoadTilesetTilePatternData
++        call EnableLCD
++
++        coord hl, 16, 0
++        ld de, .versionString
++        call PlaceString
++        coord hl, 2, 12
++        ld de, .seedString
++        call PlaceString
++        coord hl, 0, 9
++        ld de, .randoString1
++        call PlaceString
++        coord hl, 0, 10
++        ld de, .randoString2
++        call PlaceString
++        coord hl, 6, 14
++        ld de, .websiteString1
++        call PlaceString
++        coord hl, 8, 15
++        ld de, .websiteString2
++        call PlaceString
++        coord hl, 6, 16
++        ld de, .twitchString1
++        call PlaceString
++        coord hl, 8, 17
++        ld de, .twitchString2
++        call PlaceString
++        coord hl, 2, 15
++        ld a, $02
++        ld [hli], a
++        inc a
++        ld [hl], a
++        coord hl, 2, 16
++        ld a, $12
++        ld [hli], a
++        inc a
++        ld [hl], a
++        ret
++
++.versionString
++        db "v0.2@"
++.seedString
++        db "Seed: 4294967295@"
++.randoString1
++        db "stump's Generation 1@"
++.randoString2
++        db "Key Item Randomizer@"
++.websiteString1
++        db "stump.io/@"
++.websiteString2
++        db "itemrando@"
++.twitchString1
++        db "twitch.tv/@"
++.twitchString2
++        db "stumpdotio@"
++
++ClearScreenAndDisplayOptionMenu:
++        call ClearScreen
++        jp DisplayOptionMenu
+diff --git a/engine/menu/main_menu.asm b/engine/menu/main_menu.asm
+index cd4198b6..dc5ba34e 100755
+--- a/engine/menu/main_menu.asm
++++ b/engine/menu/main_menu.asm
+@@ -23,7 +23,7 @@ MainMenu:
+ 	ld [wDefaultMap],a
+ 	ld hl,wd72e
+ 	res 6,[hl]
+-	call ClearScreen
++	call ClearScreenAndDrawMainMenuBackground
+ 	call RunDefaultPaletteCommand
+ 	call LoadTextBoxTilePatterns
+ 	call LoadFontTilePatterns
+@@ -84,7 +84,7 @@ MainMenu:
+ 	jr z,.choseContinue
+ 	cp a,1
+ 	jp z,StartNewGame
+-	call DisplayOptionMenu
++	call ClearScreenAndDisplayOptionMenu
+ 	ld a,1
+ 	ld [wOptionsInitialized],a
+ 	jp .mainMenuLoop
+diff --git a/main.asm b/main.asm
+index da2d3671..c220a2e6 100755
+--- a/main.asm
++++ b/main.asm
+@@ -86,6 +86,8 @@ INCLUDE "engine/remove_pokemon.asm"
+ 
+ INCLUDE "engine/display_pokedex.asm"
+ 
++INCLUDE "engine/main_menu_bkgd.asm"
++
+ SECTION "bank3",ROMX,BANK[$3]
+ 
+ INCLUDE "engine/joypad.asm"

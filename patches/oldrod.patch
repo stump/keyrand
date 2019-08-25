@@ -1,0 +1,31 @@
+diff --git a/scripts/vermilionhouse2.asm b/scripts/vermilionhouse2.asm
+index c0735f32..4a79511c 100755
+--- a/scripts/vermilionhouse2.asm
++++ b/scripts/vermilionhouse2.asm
+@@ -15,7 +15,7 @@ VermilionHouse2Text1:
+ 	ld a, [wCurrentMenuItem]
+ 	and a
+ 	jr nz, .asm_eb1b7
+-	lb bc, OLD_ROD, 1
++	lb bc, $aa, 1
+ 	call GiveItem
+ 	jr nc, .BagFull
+ 	ld hl, wd728
+diff --git a/text/maps/vermilion_fishing_house.asm b/text/maps/vermilion_fishing_house.asm
+index 6857bb5b..93e8220c 100644
+--- a/text/maps/vermilion_fishing_house.asm
++++ b/text/maps/vermilion_fishing_house.asm
+@@ -17,9 +17,12 @@ _VermilionHouse2Text_560b6::
+ 	line "fish, young one!"
+ 
+ 	para "<PLAYER> received"
+-	line "an @"
++	line "@"
+ 	TX_RAM wcf4b
+ 	text "!@@"
++	nop
++	nop
++	nop
+ 
+ _VermilionHouse2Text_560bb::
+ 	db $0

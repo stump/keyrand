@@ -1,0 +1,13 @@
+diff --git a/scripts/fuchsiahouse2.asm b/scripts/fuchsiahouse2.asm
+index f9307c04..f1b82234 100755
+--- a/scripts/fuchsiahouse2.asm
++++ b/scripts/fuchsiahouse2.asm
+@@ -38,7 +38,7 @@ FuchsiaHouse2Text1:
+ .asm_60cba
+ 	ld hl, WardenThankYouText
+ 	call PrintText
+-	lb bc, HM_04, 1
++	lb bc, $aa, 1
+ 	call GiveItem
+ 	jr nc, .BagFull
+ 	ld hl, ReceivedHM04Text

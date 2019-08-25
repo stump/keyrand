@@ -1,0 +1,30 @@
+diff --git a/scripts/route12house.asm b/scripts/route12house.asm
+index 4b93395f..7dc6eefb 100755
+--- a/scripts/route12house.asm
++++ b/scripts/route12house.asm
+@@ -15,7 +15,7 @@ Route12HouseText1:
+ 	ld a, [wCurrentMenuItem]
+ 	and a
+ 	jr nz, .asm_a2d76
+-	lb bc, SUPER_ROD, 1
++	lb bc, $aa, 1
+ 	call GiveItem
+ 	jr nc, .BagFull
+ 	ld hl, wd728
+diff --git a/text/maps/route_12_house.asm b/text/maps/route_12_house.asm
+index e04ce5fb..2f586e97 100644
+--- a/text/maps/route_12_house.asm
++++ b/text/maps/route_12_house.asm
+@@ -17,9 +17,11 @@ _Route12HouseText_564c5::
+ 	line "fish, young one!"
+ 
+ 	para "<PLAYER> received"
+-	line "a @"
++	line "@"
+ 	TX_RAM wcf4b
+ 	text "!@@"
++	nop
++	nop
+ 
+ _Route12HouseText_564ca::
+ 	db $0

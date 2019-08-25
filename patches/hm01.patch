@@ -1,0 +1,13 @@
+diff --git a/scripts/ssanne7.asm b/scripts/ssanne7.asm
+index 0df842c2..e5fbb2d2 100755
+--- a/scripts/ssanne7.asm
++++ b/scripts/ssanne7.asm
+@@ -22,7 +22,7 @@ SSAnne7Text1:
+ 	call PrintText
+ 	ld hl, ReceivingHM01Text
+ 	call PrintText
+-	lb bc, HM_01, 1
++	lb bc, $aa, 1
+ 	call GiveItem
+ 	jr nc, .BagFull
+ 	ld hl, ReceivedHM01Text

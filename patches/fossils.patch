@@ -1,0 +1,127 @@
+diff --git a/scripts/mtmoon3.asm b/scripts/mtmoon3.asm
+index 60cd1ab8..fdca5b7b 100755
+--- a/scripts/mtmoon3.asm
++++ b/scripts/mtmoon3.asm
+@@ -264,25 +264,25 @@ MtMoon3Text6:
+ 	TX_ASM
+ 	ld a, $1
+ 	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
++	ld a, DOME_FOSSIL
++	call GetItemNameForA
+ 	ld hl, MtMoon3Text_49f24
+ 	call PrintText
+ 	call YesNoChoice
+ 	ld a, [wCurrentMenuItem]
+ 	and a
+-	jr nz, .asm_49f21
++	jr nz, dotasm_49f21
+ 	lb bc, DOME_FOSSIL, 1
+ 	call GiveItem
+ 	jp nc, MtMoon3Script_49f76
+ 	call MtMoon3Script_49f69
+-	ld a, HS_MT_MOON_3_FOSSIL_1
+-	ld [wMissableObjectIndex], a
+-	predef HideObject
+ 	SetEvent EVENT_GOT_DOME_FOSSIL
+-	ld a, $4
+-	ld [wMtMoon3CurScript], a
+-	ld [wCurMapScript], a
+-.asm_49f21
+-	jp TextScriptEnd
++	ld a, HS_MT_MOON_3_FOSSIL_1
++	jp dotasm_before_49f21
++
++GetItemNameForA:
++	ld [wd11e],a
++	jp GetItemName
+ 
+ MtMoon3Text_49f24:
+ 	TX_FAR _MtMoon3Text_49f24
+@@ -292,24 +292,27 @@ MtMoon3Text7:
+ 	TX_ASM
+ 	ld a, $1
+ 	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
++	ld a, HELIX_FOSSIL
++	call GetItemNameForA
+ 	ld hl, MtMoon3Text_49f64
+ 	call PrintText
+ 	call YesNoChoice
+ 	ld a, [wCurrentMenuItem]
+ 	and a
+-	jr nz, .asm_49f61
++	jr nz, dotasm_49f21
+ 	lb bc, HELIX_FOSSIL, 1
+ 	call GiveItem
+ 	jp nc, MtMoon3Script_49f76
+ 	call MtMoon3Script_49f69
++	SetEvent EVENT_GOT_HELIX_FOSSIL
+ 	ld a, HS_MT_MOON_3_FOSSIL_2
++dotasm_before_49f21:
+ 	ld [wMissableObjectIndex], a
+ 	predef HideObject
+-	SetEvent EVENT_GOT_HELIX_FOSSIL
+ 	ld a, $4
+ 	ld [wMtMoon3CurScript], a
+ 	ld [wCurMapScript], a
+-.asm_49f61
++dotasm_49f21:
+ 	jp TextScriptEnd
+ 
+ MtMoon3Text_49f64:
+diff --git a/text/maps/mt_moon_b2f.asm b/text/maps/mt_moon_b2f.asm
+index 472649b9..408bfa5b 100644
+--- a/text/maps/mt_moon_b2f.asm
++++ b/text/maps/mt_moon_b2f.asm
+@@ -1,18 +1,47 @@
+ _MtMoon3Text_49f24::
+-	text "You want the"
+-	line "DOME FOSSIL?"
++	text "You want"
++	line "@"
++	TX_RAM wcd6d
++	text "?"
+ 	done
++	nop
++	nop
++	nop
++	nop
++	nop
++	nop
++	nop
++	nop
++	nop
++	nop
+ 
+ _MtMoon3Text_49f64::
+-	text "You want the"
+-	line "HELIX FOSSIL?"
++	text "You want"
++	line "@"
++	TX_RAM wcd6d
++	text "?"
+ 	done
++	nop
++	nop
++	nop
++	nop
++	nop
++	nop
++	nop
++	nop
++	nop
++	nop
++	nop
+ 
+ _MtMoon3Text_49f6f::
+-	text "<PLAYER> got the"
++	text "<PLAYER> got"
+ 	line "@"
+ 	TX_RAM wcf4b
+ 	text "!@@"
++	nop
++	nop
++	nop
++	nop
+ 
+ _MtMoon3Text_49f7f::
+ 	text "Look, you've got"
