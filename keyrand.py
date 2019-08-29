@@ -72,6 +72,7 @@ HARD_DEPENDENCIES = {
   'HM01': {'S.S. TICKET'},
   'OLD AMBER': {'HM01'},
   'BICYCLE': {'BIKE VOUCHER'},
+  'POKé FLUTE': {'SILPH SCOPE'},
 }
 
 # These are needed to complete the game.
@@ -173,9 +174,8 @@ class KeyItemRandomizer(object):
                 # allows traversing Rock Tunnel (and thus Lavender/Celadon/Saffron)
                 # and returning to Pallet/Viridian/Pewter via Diglett's Cave and Route 2.
                 #
-                # We do not consider Silph Scope a dependency of the Poké Flute slot.
-                # (Should we? We can easily patch the oversight in question.)
-                new_slots = {'ITEMFINDER', 'OAK\'s PARCEL', 'TOWN MAP', 'OLD AMBER', 'POKé FLUTE', 'LIFT KEY', 'HM02', 'COIN CASE', 'CARD KEY'}
+                # Note that the Poké Doll/Marowak oversight has been patched.
+                new_slots = {'ITEMFINDER', 'OAK\'s PARCEL', 'TOWN MAP', 'OLD AMBER', 'LIFT KEY', 'HM02', 'COIN CASE', 'CARD KEY'}
                 if new_slots - self.accessible_slots:
                     if self.item_is_accessible('HM01'):
                         self.accessible_slots.update(new_slots)
@@ -203,15 +203,22 @@ class KeyItemRandomizer(object):
                 # It also opens up Lavender/Celadon/Saffron without Cut by waking
                 # the Route 12 Snorlax.
                 #
-                # We do not consider Silph Scope a dependency of the Poké Flute slot.
-                # (Should we? We can easily patch the oversight in question.)
-                new_slots = {'ITEMFINDER', 'POKé FLUTE', 'SUPER ROD', 'LIFT KEY', 'COIN CASE', 'GOOD ROD', 'HM03', 'GOLD TEETH', 'CARD KEY'}
+                # Note that the Poké Doll/Marowak oversight has been patched.
+                new_slots = {'ITEMFINDER', 'SUPER ROD', 'LIFT KEY', 'COIN CASE', 'GOOD ROD', 'HM03', 'GOLD TEETH', 'CARD KEY'}
                 if new_slots - self.accessible_slots:
                     if self.item_is_accessible('POKé FLUTE'):
                         self.accessible_slots.update(new_slots)
                         continue
                     else:
                         potential_swaps.add('POKé FLUTE')
+
+                # Silph Scope gives the Poké Flute slot, but Lavender must be reachable.
+                if 'POKé FLUTE' not in self.accessible_slots:
+                    if (self.item_is_accessible('HM01') or self.item_is_accessible('POKé FLUTE')) and self.item_is_accessible('SILPH SCOPE'):
+                        self.accessible_slots.add('POKé FLUTE')
+                        continue
+                    else:
+                        potential_swaps.update({'HM01', 'POKé FLUTE', 'SILPH SCOPE'})
 
                 # Lift Key gives the Silph Scope slot, but Celadon must be reachable.
                 if 'SILPH SCOPE' not in self.accessible_slots:
@@ -433,6 +440,20 @@ class KeyItemRandomizer(object):
         replace(rom, 0x9c599, 'a0ad7f50014bcf00e7', '50014bcf00e7505000')
 
         # Poké Flute slot
+        # Make Mr. Fuji not be required by changing the initial state of the Silph guards.
+        #At 0x0cb31, 11 (hide the blocking guard)
+        replace(rom, 0x0cb31, '15', '11')
+        #At 0x0cb34, 15 (show the stepped-aside guard)
+        replace(rom, 0x0cb34, '11', '15')
+        # In exchange for that, patch the Poké Doll/Marowak oversight.
+        #At 0x0d63f, 7664 (make use of Card Key from menu fail immediately)
+        replace(rom, 0x0d63f, '2260', '7664')
+        #At 0x0d645, c7 (use backward-extended entry point for Poké Doll code)
+        replace(rom, 0x0d645, 'cd', 'c7')
+        #At 0x0e022, fa5ed3fe93c0fad8cffe91c0213260c9008daee77f93a7a4b1a47fa0b1a44fa4adaeb4a6a77fb2a4b0b4a4ada2a455a1b1a4a0aab27fa8ad7fb3a7a8b255a6a0aca47fa0abb1a4a0a3b87fe355aba4b3bd7fadaeb37fa0a3a355a0adb87facaeb1a4e75850 (add Marowak check and special message if you try)
+        replace(rom, 0x0e022, 'afea1fd7cd8645fa8645fe1820052172601811fe242005219b601808fe5ec2816521c460fa5ed3472afeffca8165b8200e2aba200b2abb20087eea1fd7180523232318e421e865cd493c2128d7cbfec9cf040400cf040501d10c0402d10c0503d4060a04d4', 'fa5ed3fe93c0fad8cffe91c0213260c9008daee77f93a7a4b1a47fa0b1a44fa4adaeb4a6a77fb2a4b0b4a4ada2a455a1b1a4a0aab27fa8ad7fb3a7a8b255a6a0aca47fa0abb1a4a0a3b87fe355aba4b3bd7fadaeb37fa0a3a355a0adb87facaeb1a4e75850')
+        #At 0x0e0c7, fa57d03dc28165cd2260cab9 (hook Marowak check into Poké Doll code)
+        replace(rom, 0x0e0c7, '14eb090915fffa57d03dc281', 'fa57d03dc28165cd2260cab9')
         #At 0x1d928, new item
         replace_item(rom, 0x1d928, 'POKé FLUTE')
         #At 0x9a007, 50014bcf00e7505000 (remove "a" before item name in text)
