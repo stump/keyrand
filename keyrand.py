@@ -137,35 +137,21 @@ class KeyItemRandomizer(object):
             # do an expanding search for all items required to
             # complete the game.
             # Don't consider Itemfinder accessible until either
-            # Poké Flute or HM01 have been found. 30 Pokémon
-            # owned is a little steep if you're stuck in that
-            # trap. (10 for HM05 is OK though.)
+            # Poké Flute or HM01 have been found. 12 Pokémon
+            # owned is a little annoying if you're stuck in that
+            # trap. (6 for HM05 is OK though.)
             #
             # HM05 is here because we remove the Cut tree that
-            # blocks it. This is to potentially allow 10 Pokémon
+            # blocks it. This is to potentially allow 6 Pokémon
             # to be required to escape the trap. (Also I forgot
             # about that Cut tree when making the initial logic,
             # there's precedent for removing it in the fact that
             # there's no such obstacle in FireRed/LeafGreen, we
             # were thinking at one point of backporting another
             # FR/LG change (namely the Tea) but decided not to,
-            # and I just like the idea of possibly needing 10
-            # (but definitely not 30!) Pokémon to get anywhere
-            # other than Cerulean and Vermilion.
-            #
-            # (Fun fact: In the worst case [nothing but starter,
-            # no rods, HM01 or Flute at Itemfinder and the other
-            # not accessible without it], it is possible to get
-            # to exactly 30 owned if you catch and fully evolve
-            # everything you have access to [other than stones
-            # and trades], do the in-game trades you have access
-            # to that you can do with accessible Pokémon, and
-            # fully evolve your starter. [This applies whether
-            # or not that one Cut tree on Route 2 is removed.]
-            # It would be utterly sadistic to force this upon
-            # players, though, so we consider that slot to
-            # depend on anything at all that would open up more
-            # of the game.)
+            # and I just like the idea of possibly needing 6
+            # (but not 12) Pokémon to get anywhere other than
+            # Cerulean and Vermilion.
             self.accessible_slots = {'S.S. TICKET', 'OLD ROD', 'BIKE VOUCHER', 'HM05'}
             while not all(self.item_is_accessible(item) for item in REQUIRED_TO_COMPLETE_GAME):
                 potential_swaps = set()
