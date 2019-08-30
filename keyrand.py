@@ -455,6 +455,8 @@ class KeyItemRandomizer(object):
         replace(rom, 0x0e0c7, '14eb090915fffa57d03dc281', 'fa57d03dc28165cd2260cab9')
         #At 0x1d928, new item
         replace_item(rom, 0x1d928, 'POKé FLUTE')
+        #At 0x60eaf, 1808 (don't resurrect Silph guard if Silph was done first)
+        replace(rom, 0x60eaf, '3e18', '1808')
         #At 0x9a007, 50014bcf00e7505000 (remove "a" before item name in text)
         replace(rom, 0x9a007, 'a07f50014bcf00e750', '50014bcf00e7505000')
 

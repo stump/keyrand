@@ -154,6 +154,25 @@ index 91b9286b..3bbfe125 100755
  	call GiveItem
  	jr nc, .BagFull
  	ld hl, ReceivedFluteText
+diff --git a/scripts/pokemontower7.asm b/scripts/pokemontower7.asm
+index 88c62c53..5525df48 100755
+--- a/scripts/pokemontower7.asm
++++ b/scripts/pokemontower7.asm
+@@ -263,9 +263,13 @@ PokemonTower7FujiText:
+ 	ld a, HS_SAFFRON_CITY_E
+ 	ld [wMissableObjectIndex], a
+ 	predef HideObject
+-	ld a, HS_SAFFRON_CITY_F
++	; Don't show this guard - he's already shown.
++	; Otherwise we resurrect him if Tower is done after Silph.
++	jr .skipShowingSilphGuard
++	;ld a, HS_SAFFRON_CITY_F
+ 	ld [wMissableObjectIndex], a
+ 	predef ShowObject
++.skipShowingSilphGuard
+ 	ld a, $4
+ 	ld [wPokemonTower7CurScript], a
+ 	ld [wCurMapScript], a
 diff --git a/text/maps/fujis_house.asm b/text/maps/fujis_house.asm
 index 86cade68..3799e2b4 100644
 --- a/text/maps/fujis_house.asm
