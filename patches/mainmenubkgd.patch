@@ -52,7 +52,7 @@ index 00000000..86cf5e8f
 +        ret
 +
 +.versionString
-+        db "v0.2@"
++        db "v0.9@"
 +.seedString
 +        db "Seed: 4294967295@"
 +.randoString1
