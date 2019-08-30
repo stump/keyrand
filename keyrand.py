@@ -28,7 +28,8 @@ KEY_ITEMS = ['OAK\'s PARCEL',
              'HM04',
              'HM02',
              'CARD KEY',
-             'SECRET KEY']
+             'SECRET KEY',
+             'TEA']
 
 KEY_ITEM_IDS = {
   'OAK\'s PARCEL': 0x46,
@@ -55,6 +56,7 @@ KEY_ITEM_IDS = {
   'HM02': 0xc5,
   'CARD KEY': 0x30,
   'SECRET KEY': 0x2b,
+  'TEA': 0x09,
 }
 
 # Prevent items from requiring themselves to get to them.
@@ -77,7 +79,7 @@ HARD_DEPENDENCIES = {
 
 # These are needed to complete the game.
 # Again, Oak's Parcel is special-cased.
-REQUIRED_TO_COMPLETE_GAME = {'HM01', 'HM03', 'HM04', 'POKé FLUTE', 'CARD KEY', 'SECRET KEY'}
+REQUIRED_TO_COMPLETE_GAME = {'HM01', 'HM03', 'HM04', 'POKé FLUTE', 'CARD KEY', 'SECRET KEY', 'TEA'}
 
 
 class UnrecognizedROM(Exception):
@@ -145,29 +147,38 @@ class KeyItemRandomizer(object):
             # blocks it. This is to potentially allow 6 Pokémon
             # to be required to escape the trap. (Also I forgot
             # about that Cut tree when making the initial logic,
-            # there's precedent for removing it in the fact that
-            # there's no such obstacle in FireRed/LeafGreen, we
-            # were thinking at one point of backporting another
-            # FR/LG change (namely the Tea) but decided not to,
+            # there's no such obstacle in FireRed/LeafGreen and
+            # we brought another logic change from it (the Tea)
             # and I just like the idea of possibly needing 6
             # (but not 12) Pokémon to get anywhere other than
-            # Cerulean and Vermilion.
+            # Cerulean and Vermilion.)
             self.accessible_slots = {'S.S. TICKET', 'OLD ROD', 'BIKE VOUCHER', 'HM05'}
             while not all(self.item_is_accessible(item) for item in REQUIRED_TO_COMPLETE_GAME):
                 potential_swaps = set()
 
                 # Cut (requiring the Cascadebadge, which you always have access to)
-                # allows traversing Rock Tunnel (and thus Lavender/Celadon/Saffron)
-                # and returning to Pallet/Viridian/Pewter via Diglett's Cave and Route 2.
+                # allows traversing Rock Tunnel (and thus Lavender/Celadon) and
+                # returning to Pallet/Viridian/Pewter via Diglett's Cave and Route 2.
                 #
                 # Note that the Poké Doll/Marowak oversight has been patched.
-                new_slots = {'ITEMFINDER', 'OAK\'s PARCEL', 'TOWN MAP', 'OLD AMBER', 'LIFT KEY', 'HM02', 'COIN CASE', 'CARD KEY'}
+                new_slots = {'ITEMFINDER', 'OAK\'s PARCEL', 'TOWN MAP', 'OLD AMBER', 'LIFT KEY', 'HM02', 'COIN CASE', 'TEA'}
                 if new_slots - self.accessible_slots:
                     if self.item_is_accessible('HM01'):
                         self.accessible_slots.update(new_slots)
                         continue
                     else:
                         potential_swaps.add('HM01')
+
+                # Tea allows access to Saffron, and thus to Lavender/Celadon.
+                #
+                # Note that the Poké Doll/Marowak oversight has been patched.
+                new_slots = {'ITEMFINDER', 'LIFT KEY', 'COIN CASE', 'TEA', 'CARD KEY'}
+                if new_slots - self.accessible_slots:
+                    if self.item_is_accessible('TEA'):
+                        self.accessible_slots.update(new_slots)
+                        continue
+                    else:
+                        potential_swaps.add('TEA')
 
                 # Bike Voucher gives the Bicycle slot.
                 if 'BICYCLE' not in self.accessible_slots:
@@ -186,11 +197,11 @@ class KeyItemRandomizer(object):
                         potential_swaps.add('S.S. TICKET')
 
                 # Poké Flute allows access to Fuchsia by waking either Snorlax.
-                # It also opens up Lavender/Celadon/Saffron without Cut by waking
-                # the Route 12 Snorlax.
+                # It also opens up Lavender/Celadon without Cut by waking the
+                # Route 12 Snorlax.
                 #
                 # Note that the Poké Doll/Marowak oversight has been patched.
-                new_slots = {'ITEMFINDER', 'SUPER ROD', 'LIFT KEY', 'COIN CASE', 'GOOD ROD', 'HM03', 'GOLD TEETH', 'CARD KEY'}
+                new_slots = {'ITEMFINDER', 'SUPER ROD', 'LIFT KEY', 'COIN CASE', 'GOOD ROD', 'HM03', 'GOLD TEETH', 'TEA'}
                 if new_slots - self.accessible_slots:
                     if self.item_is_accessible('POKé FLUTE'):
                         self.accessible_slots.update(new_slots)
@@ -200,7 +211,7 @@ class KeyItemRandomizer(object):
 
                 # Silph Scope gives the Poké Flute slot, but Lavender must be reachable.
                 if 'POKé FLUTE' not in self.accessible_slots:
-                    if (self.item_is_accessible('HM01') or self.item_is_accessible('POKé FLUTE')) and self.item_is_accessible('SILPH SCOPE'):
+                    if (self.item_is_accessible('HM01') or self.item_is_accessible('POKé FLUTE') or self.item_is_accessible('TEA')) and self.item_is_accessible('SILPH SCOPE'):
                         self.accessible_slots.add('POKé FLUTE')
                         continue
                     else:
@@ -208,7 +219,7 @@ class KeyItemRandomizer(object):
 
                 # Lift Key gives the Silph Scope slot, but Celadon must be reachable.
                 if 'SILPH SCOPE' not in self.accessible_slots:
-                    if (self.item_is_accessible('HM01') or self.item_is_accessible('POKé FLUTE')) and self.item_is_accessible('LIFT KEY'):
+                    if (self.item_is_accessible('HM01') or self.item_is_accessible('POKé FLUTE') or self.item_is_accessible('TEA')) and self.item_is_accessible('LIFT KEY'):
                         self.accessible_slots.add('SILPH SCOPE')
                         continue
                     else:
@@ -469,6 +480,20 @@ class KeyItemRandomizer(object):
         replace_item(rom, 0x5649d, 'SUPER ROD')
         #At 0x8ca45, 50014bcf00e7505000 (remove "a" before item name in text)
         replace(rom, 0x8ca45, 'a07f50014bcf00e750', '50014bcf00e7505000')
+
+        # Tea slot (and implementation)
+        #At 0x0476d, e6e6e6e6509280858091887f81808b8b50938480 (rename Pokédex item to Tea)
+        replace(rom, 0x0476d, '509280858091887f81808b8b508f8e8aba838497', 'e6e6e6e6509280858091887f81808b8b50938480')
+        #At 0x0d5f1, 7664 (never the time to use it)
+        replace(rom, 0x0d5f1, '565a', '7664')
+        #At 0x486b2, 8f6312 (repoint text of NPC that gives you it)
+        replace(rom, 0x486b2, 'fe4e27', '8f6312')
+        #At 0x4a38f, 08fa78d7cb47280921bd63cd493cc3d72421c263cd493c010109cd2e3e300a2178d7cbc621036418e2217c4a18dd17fe4e27500098aeb47fb2a7aeb4aba3adbe7fb2afa4ada34fa0abab7fb8aeb4b17facaeada4b855aead7fa3b1a8adaab2e85193b1b87fb3a7a8b27fa8adb2b3a4a0a3e8585700527fb1a4a2a4a8b5a4a34f50014bcf00e7501100518daeb3a7a8ada67fa1a4a0b3b24fb3a7a8b1b2b37faba8aaa47fb2aeaca455a7aeb37f938480e85188b37fb1a4a0ababb87fa8b24fb3a7a47fa1a4b2b3e857 (new code and text for NPC)
+        replace(rom, 0x4a38f, '000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000', '08fa78d7cb47280921bd63cd493cc3d72421c263cd493c010109cd2e3e300a2178d7cbc621036418e2217c4a18dd17fe4e27500098aeb47fb2a7aeb4aba3adbe7fb2afa4ada34fa0abab7fb8aeb4b17facaeada4b855aead7fa3b1a8adaab2e85193b1b87fb3a7a8b27fa8adb2b3a4a0a3e8585700527fb1a4a2a4a8b5a4a34f50014bcf00e7501100518daeb3a7a8ada67fa1a4a0b3b24fb3a7a8b1b2b37faba8aaa47fb2aeaca455a7aeb37f938480e85188b37fb1a4a0ababb87fa8b24fb3a7a47fa1a4b2b3e857')
+        #At 0x4a3a8, new item
+        replace_item(rom, 0x4a3a8, 'TEA')
+        #At 0x5a5b7, 090000 (make the guards accept Tea exclusively)
+        replace(rom, 0x5a5b7, '3c3d3e', '090000')
 
         # Town Map slot
         #At 0x19b69, 5f (give you the item after just fighting Rival I, not after delivering parcel)

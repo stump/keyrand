@@ -1,0 +1,146 @@
+diff --git a/constants/event_constants.asm b/constants/event_constants.asm
+index 5b73012b..c2082df8 100755
+--- a/constants/event_constants.asm
++++ b/constants/event_constants.asm
+@@ -392,7 +392,7 @@ const_value = 0
+ 	const EVENT_185                                  ; 185, (D777, bit 5)
+ 	const EVENT_186                                  ; 186, (D777, bit 6)
+ 	const EVENT_187                                  ; 187, (D777, bit 7)
+-	const EVENT_188                                  ; 188, (D778, bit 0)
++	const EVENT_GOT_TEA                              ; 188, (D778, bit 0)
+ 	const EVENT_189                                  ; 189, (D778, bit 1)
+ 	const EVENT_18A                                  ; 18A, (D778, bit 2)
+ 	const EVENT_18B                                  ; 18B, (D778, bit 3)
+diff --git a/constants/item_constants.asm b/constants/item_constants.asm
+index fe6fcb15..db98dfe7 100755
+--- a/constants/item_constants.asm
++++ b/constants/item_constants.asm
+@@ -8,7 +8,7 @@ const_value = 1
+ 	const BICYCLE       ; $06
+ 	const SURFBOARD     ; $07 buggy?
+ 	const SAFARI_BALL   ; $08
+-	const POKEDEX       ; $09
++	const TEA           ; $09
+ 	const MOON_STONE    ; $0A
+ 	const ANTIDOTE      ; $0B
+ 	const BURN_HEAL     ; $0C
+diff --git a/engine/items/items.asm b/engine/items/items.asm
+index c4c1634b..9cc1469b 100755
+--- a/engine/items/items.asm
++++ b/engine/items/items.asm
+@@ -24,7 +24,7 @@ ItemUsePtrTable:
+ 	dw ItemUseBicycle    ; BICYCLE
+ 	dw ItemUseSurfboard  ; out-of-battle Surf effect
+ 	dw ItemUseBall       ; SAFARI_BALL
+-	dw ItemUsePokedex    ; POKEDEX
++	dw UnusableItem      ; TEA
+ 	dw ItemUseEvoStone   ; MOON_STONE
+ 	dw ItemUseMedicine   ; ANTIDOTE
+ 	dw ItemUseMedicine   ; BURN_HEAL
+diff --git a/engine/overworld/saffron_guards.asm b/engine/overworld/saffron_guards.asm
+index 3b26b6f8..5a2ba349 100755
+--- a/engine/overworld/saffron_guards.asm
++++ b/engine/overworld/saffron_guards.asm
+@@ -13,4 +13,4 @@ RemoveGuardDrink:
+ 	jpba RemoveItemByID
+ 
+ GuardDrinksList:
+-	db FRESH_WATER, SODA_POP, LEMONADE, $00
++	db TEA, $00, $00, $00
+diff --git a/main.asm b/main.asm
+index da2d3671..53398e85 100755
+--- a/main.asm
++++ b/main.asm
+@@ -1246,6 +1246,8 @@ INCLUDE "scripts/safarizonesecrethouse.asm"
+ INCLUDE "data/mapObjects/safarizonesecrethouse.asm"
+ SafariZoneSecretHouseBlocks: INCBIN "maps/safarizonesecrethouse.blk"
+ 
++INCLUDE "scripts/celadonmansion1tea.asm"
++
+ 
+ SECTION "bank13",ROMX,BANK[$13]
+ 
+diff --git a/scripts/celadonmansion1.asm b/scripts/celadonmansion1.asm
+index f6ef7669..11afb8da 100755
+--- a/scripts/celadonmansion1.asm
++++ b/scripts/celadonmansion1.asm
+@@ -19,7 +19,7 @@ CeladonMansion1Text1:
+ 	jp CeladonMansion1_486a1
+ 
+ CeladonMansion1Text2:
+-	TX_FAR _CeladonMansion1Text2
++	TX_FAR TeaText
+ 	db "@"
+ 
+ CeladonMansion1Text3:
+diff --git a/scripts/celadonmansion1tea.asm b/scripts/celadonmansion1tea.asm
+new file mode 100644
+index 00000000..736c0fd2
+--- /dev/null
++++ b/scripts/celadonmansion1tea.asm
+@@ -0,0 +1,49 @@
++TeaText::
++	TX_ASM
++	CheckEvent EVENT_GOT_TEA
++	jr z, .GiveTea
++	ld hl, _TeaVanillaText
++.PrintTextAndEnd
++	call PrintText
++	jp TextScriptEnd
++.GiveTea
++	ld hl, _TeaPreGiveText
++	call PrintText
++	lb bc, TEA, 1
++	call GiveItem
++	jr nc, .BagFull
++	SetEvent EVENT_GOT_TEA
++	ld hl, _TeaPostGiveText
++	jr .PrintTextAndEnd
++.BagFull
++	ld hl, TM21NoRoomText
++	jr .PrintTextAndEnd
++
++_TeaVanillaText::
++	TX_FAR _CeladonMansion1Text2
++	db "@"
++
++_TeaPreGiveText::
++	text "You shouldn't spend"
++	line "all your money"
++	cont "on drinks."
++
++	para "Try this instead."
++	prompt
++	done
++
++_TeaPostGiveText::
++	text "<PLAYER> received"
++	line "@"
++	TX_RAM wcf4b
++	text "!@"
++	TX_SFX_KEY_ITEM
++	text ""
++
++	para "Nothing beats"
++	line "thirst like some"
++	cont "hot TEA."
++
++	para "It really is"
++	line "the best."
++	done
+diff --git a/text/item_names.asm b/text/item_names.asm
+index e436d74d..b6fbcced 100755
+--- a/text/item_names.asm
++++ b/text/item_names.asm
+@@ -5,9 +5,9 @@ ItemNames:
+ 	db "POKé BALL@"
+ 	db "TOWN MAP@"
+ 	db "BICYCLE@"
+-	db "?????@"
++	db "?????????@"
+ 	db "SAFARI BALL@"
+-	db "POKéDEX@"
++	db "TEA@"
+ 	db "MOON STONE@"
+ 	db "ANTIDOTE@"
+ 	db "BURN HEAL@"
