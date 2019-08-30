@@ -53,6 +53,7 @@ def get(error=''):
    <li>In exchange for Pokémon Tower no longer being a hard requirement, use of a Poké Doll on the ghost Marowak has been patched.</li>
    <li>The Cut tree between Diglett's Cave and the right gatehouse on Route 2 has been removed.</li>
    <li>The Tea from FireRed/LeafGreen has been added; nothing other than the Tea will allow you into Saffron. (It is randomized like all other key items.)</li>
+   <li>Arrow tile movement in Game Corner and the Viridian Gym has been sped up to walking speed.</li>
    <li>Capture requirements for the HM05 and Itemfinder locations have been reduced to 6 and 12, respectively.</li>
    <li>Oak's Aides, the Bike Shop salesman, and the prompts for picking up the fossils will tell you the randomized item.</li>
    <li>All other references to key items in text, outside the immediate act of actually getting the item, will remain unchanged.</li>

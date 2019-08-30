@@ -11,3 +11,18 @@ index b4e98d04..767ce7b9 100755
  
  	; warp-to
  	EVENT_DISP ROCKET_HIDEOUT_4_WIDTH, $a, $13 ; ROCKET_HIDEOUT_3
+diff --git a/scripts/rockethideout2.asm b/scripts/rockethideout2.asm
+index c5f026d5..dce8ea19 100755
+--- a/scripts/rockethideout2.asm
++++ b/scripts/rockethideout2.asm
+@@ -323,7 +323,9 @@ LoadSpinnerArrowTiles:
+ 	add hl, bc
+ 	ld a, [hl]
+ 	ld [wSpriteStateData1 + 2], a
+-	ld a, [wCurMapTileset]
++	; Skip the tile data updates; they are the source of the slowness.
++	ret
++	dw wCurMapTileset
+ 	cp FACILITY
+ 	ld hl, FacilitySpinnerArrows
+ 	jr z, .asm_44ff6

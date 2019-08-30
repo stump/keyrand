@@ -408,6 +408,8 @@ class KeyItemRandomizer(object):
         # TODO: Pokédex evaluation
 
         # Lift Key slot
+        #At 0x44fe9, c9 (greatly speed up arrow tile movement)
+        replace(rom, 0x44fe9, 'fa', 'c9')
         #At 0x45643, new item
         replace_item(rom, 0x45643, 'LIFT KEY')
 
