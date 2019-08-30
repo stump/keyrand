@@ -69,7 +69,8 @@ def get(error=''):
    <p><input type="submit" value="Randomize!" /></p>
   </form>
   <p>No ROM images are hosted or stored on this server.</p>
-  <p>Please send any questions and feedback (including bug reports) to <a href="https://stump.io/discord">stump's Discord</a>.</p>
+  <p><a href="https://github.com/stump/keyrand">This randomizer is free and open source software.</a></p>
+  <p>Please send any questions and feedback (including bug reports) to <a href="https://stump.io/discord">stump's Discord</a> or the project issue tracker.</p>
  </body>
 </html>
 ''' % {'error': error}
